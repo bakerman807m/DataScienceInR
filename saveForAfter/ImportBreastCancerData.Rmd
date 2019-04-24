@@ -1,0 +1,50 @@
+---
+title: "Chapter 3"
+author: "Stephen Baker"
+date: "4/24/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(magrittr)
+install.packages("mlbench")
+library(mlbench)
+```
+
+Import URL: 
+```{r}
+data_url = "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data"
+```
+
+## Reading Data
+Read BreastCancer data from mlbench library to use headers for other data that matches the format.
+
+Data from the mlbench library
+```{r}
+data(BreastCancer)
+BreastCancer %>% head(3)
+```
+
+## Import Data that Matches 
+
+```{r}
+read.csv(data_url, header = FALSE,
+         col.names = names(BreastCancer)) ->
+  raw_breast_cancer ->
+  formatted_breast_cancer
+
+dict <- c("2" = "benign", "4" = "malignant")
+map_class <- function(x) dict[as.character(x)]
+formatted_breast_cancer$Class <-
+  formatted_breast_cancer$Class %>%
+  map_class %>%
+  unname %>%
+  factor(levels = c("benign", "malignant"))
+```
+
+```{r}
+formatted_breast_cancer %>% head(5)
+```
+
