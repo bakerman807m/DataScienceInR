@@ -1,0 +1,25 @@
+---
+title: "Chapter 3, Import BostonHousing"
+author: "Stephen Baker"
+date: "4/24/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+```{r}
+iris %>% tbl_df
+```
+```{r}
+iris %>% tbl_df %>% select(Petal.Width, Petal.Length) %>% head(5)
+```
+
+## Pattern Matching
+```{r}
+iris %>% tbl_df %>%
+  select(starts_with("Petal")) %>% head(3)
+```
+
